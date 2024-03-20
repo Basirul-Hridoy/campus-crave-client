@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaStar } from "react-icons/fa"
+import { useNavigate } from "react-router-dom";
 const MealsCategoryTab = () => {
 
     //* State to manage active tab
     const [activeTab, setActiveTab] = useState('all');
+
+    const navigate = useNavigate();
 
 
     //* Fetch meals data using react-query
@@ -19,6 +22,7 @@ const MealsCategoryTab = () => {
 
     //* Filter meals based on active tab
     const filteredMeals = activeTab === 'all' ? melasData : melasData.filter(meal => meal.category === activeTab);
+
     return (
         <div className="bg-slate-50 pb-24">
 
@@ -59,7 +63,10 @@ const MealsCategoryTab = () => {
                                 <h6 className="text-sm md:text-base lg:text-lg">Waterproof Sport HD Monitor for MacBook</h6>
                             </div>
                             <div className=" text-sm md:text-base flex justify-between items-center">
-                                <button className="px-4 py-2 rounded-lg bg-[#49B2FF] hover:bg-sky-600 duration-300 hover:scale-105 text-white font-semibold font-sans">Buy now</button>
+                                <button
+                                    onClick={() => navigate(`/meal-details/${meal.id}`, { state: melasData })}
+                                    className="px-4 py-2 rounded-lg bg-[#49B2FF] hover:bg-sky-600 duration-300 hover:scale-105 text-white font-semibold font-sans">Details</button>
+
                                 <p className=" px-3 py-2 rounded-lg font-semibold border border-gray-200 flex items-center">
                                     <FaStar className="text-orange-400 text-xl" />{meal.rating}</p>
                             </div>

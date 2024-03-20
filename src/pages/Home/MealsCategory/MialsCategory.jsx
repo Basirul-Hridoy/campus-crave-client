@@ -1,4 +1,4 @@
-import MealsCategoryTab from "../../../components/MealsCategoryTab";
+import MealsCategoryTab from "../../../components/Meals/MealsCategoryTab";
 
 const MialsCategory = () => {
     return (
