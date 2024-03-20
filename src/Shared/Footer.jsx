@@ -22,7 +22,7 @@ const Footer = () => {
                         {/* <img src="../../public/images/navbar-logo-removebg (1).png" width={200} alt="" /> */}
                         <h2 className='text-4xl text-orange-400 font-bold flex items-center gap-2 '><img src="../public/main-logo.png" className='w-12' alt="" /> Campus <span className='text-red-500'>Crave</span></h2>
                         <p className='md:leading-9 leading-8'>
-                            We denounce with righteous indi gnation and dislike men who are so beguiled and demoralized by the charms of pleasure of your moment, so blinded by desire those who fail weakness.
+                            We denounce with righteous indi gnation and dislike men who are so beguiled and demoralized by the charms of pleasure of your moment, so blinded by desire those who fail weakness
                         </p>
                     </div>
                     <div className='max-w-xs space-y-4'>
