@@ -9,12 +9,12 @@ function App() {
     setNavUserModal(false)
   }
   return (
-    <div>
+    <div className='mb-32'>
       <Navbar />
       <div onClick={handleNavUeerModal}>
         <Outlet />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

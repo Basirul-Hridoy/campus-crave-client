@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
 import { AiOutlineLogin } from "react-icons/ai";
 import { IoMdNotifications } from "react-icons/io";
 import { StateContext } from '../provider/GlobalStatemanagment';
@@ -7,7 +7,7 @@ import LoginModal from '../components/LoginModal';
 
 const Navbar = () => {
     const user = !true;
-    const { navUserModal, setNavUserModal, showLoginModalState, setShowLoginModalState } = useContext(StateContext);
+    const { navUserModal, setNavUserModal, setShowLoginModalState } = useContext(StateContext);
 
     return (
         <>
@@ -18,7 +18,7 @@ const Navbar = () => {
                     {/*//* ==== Logo field ====*/}
                     <div className="cursor-pointer  transition-all duration-300 hover:scale-105">
                         {/* <h2><img src="../public/images/navbar-logo-removebg (2).png" className='w-40' alt="" /></h2> */}
-                        <h2 className='md:text-4xl text-3xl text-orange-400 font-bold flex items-center gap-1 md:gap-2'><img src="../public/main-logo.png" className='md:w-12 w-10' alt="" /> Campus <span className='text-red-500'>Crave</span></h2>
+                        <h2 className='md:text-4xl text-3xl text-orange-400 font-bold flex items-center gap-1 md:gap-2'><img src="../public/images/main-logo.png" className='md:w-12 w-10' alt="" /> Campus <span className='text-red-500'>Crave</span></h2>
                     </div>
 
                     {/*//* ==== MenuBar ====*/}
@@ -79,7 +79,7 @@ const Navbar = () => {
                         </div>
                         <div className="relative mx-auto w-fit text-black">
                             <button onClick={() => setNavUserModal((prev) => !prev)}>
-                                <img width={40} height={40} src='../../public/main-logo.png' />
+                                <img width={40} height={40} src='../../public/images/main-logo.png' />
                             </button>
                             <ul className={`${navUserModal ? 'visible duration-300' : 'invisible'} absolute right-0 top-[67px] z-50 rounded-sm bg-slate-200 shadow-md`}>
                                 <p className={`rounded-sm w-60 px-4 py-2 font-semibold`}>

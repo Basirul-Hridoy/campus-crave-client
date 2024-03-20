@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .active{
-    @apply text-secondary  border-orange-500 
+    @apply text-secondary  
  }
 
  .navItmeBorder{
