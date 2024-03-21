@@ -11,7 +11,7 @@ const Membarship = () => {
             return res.json();
         }
     });
-    console.log(membarshipData);
+
     return (
         <div style={{ backgroundImage: `url(${hostelBg})`, backgroundSize: "cover" }} className="bg-fixed">
             <div className=" flex md:flex-row flex-col justify-center gap-10  md:py-32 py-8 bg-primary bg-opacity-90 px-4 md:px-0">

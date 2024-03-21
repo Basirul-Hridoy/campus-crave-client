@@ -20,7 +20,7 @@ const Footer = () => {
                 <div className='wrapper flex flex-col md:flex-row justify-between md:gap-8 gap-4 pt-40 pb-14 text-[#FFFFFF] px-4'>
                     <div className='md:w-96 w-full space-y-4'>
                         {/* <img src="../../public/images/navbar-logo-removebg (1).png" width={200} alt="" /> */}
-                        <h2 className='text-4xl text-orange-400 font-bold flex items-center gap-2 '><img src="../public/main-logo.png" className='w-12' alt="" /> Campus <span className='text-red-500'>Crave</span></h2>
+                        <h2 className='text-4xl text-orange-400 font-bold flex items-center gap-2 '><img src="../../public/images/main-logo.png" className='w-12' alt="" /> Campus <span className='text-red-500'>Crave</span></h2>
                         <p className='md:leading-9 leading-8'>
                             We denounce with righteous indi gnation and dislike men who are so beguiled and demoralized by the charms of pleasure of your moment, so blinded by desire those who fail weakness
                         </p>

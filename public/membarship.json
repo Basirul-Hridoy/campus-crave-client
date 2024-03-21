@@ -4,32 +4,32 @@
         "title": "Silver membarship section",
         "category": "Silver",
         "price": 250,
-        "facilities": {
-            "name": "normal service",
-            "food": "normal quality",
-            "room": "floor"
-        }
+        "facilities": [
+            "normal service",
+            "normal quality",
+            "floor"
+        ]
     },
     {
         "_id": 2,
         "title": "Gold membarship section",
         "category": "Gold",
         "price": 500,
-        "facilities": {
-            "name": "Good service",
-            "food": "Good quality",
-            "room": "2nd Floor"
-        }
+        "facilities": [
+            "Good service",
+            "Good quality",
+            "2nd Floor"
+        ]
     },
     {
         "_id": 3,
         "title": "Platinum membarship section",
         "category": "Platinum",
         "price": 1000,
-        "facilities": {
-            "name": "Top services",
-            "food": "Top quality",
-            "room": "Top floor"
-        }
+        "facilities": [
+            "Top services",
+            "Top quality",
+            "Top floor"
+        ]
     }
 ]
