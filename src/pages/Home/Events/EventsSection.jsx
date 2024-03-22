@@ -16,7 +16,7 @@ const EventsSection = () => {
                     {/* Individual Event Card */}
                     <div className="bg-white rounded-lg overflow-hidden shadow-md">
                         <div className="relative overflow-hidden">
-                            <span className="px-3 py-1 rounded-xl bg-blue-500 text-white absolute top-3 right-3 z-50 text-sm font-semibold">25 May</span>
+                            <span className="px-3 py-1 rounded-xl bg-blue-500 text-white absolute top-3 right-3 z-20 text-sm font-semibold">25 May</span>
                             <img src={eventImg_3} alt="Event" className="w-full h-64 object-cover object-center hover:scale-110 transition-all duration-1000" />
                             <div className="absolute bottom-0 left-0 bg-primary text-white px-4 py-2 font-semibold rounded-tr-lg">Upcoming</div>
                         </div>
@@ -35,7 +35,7 @@ const EventsSection = () => {
                     <div className="bg-white rounded-lg overflow-hidden shadow-md">
                         <div className="relative overflow-hidden">
                             <img src={eventImg_1} alt="Event" className="w-full h-64 object-cover object-center hover:scale-110 transition-all duration-1000" />
-                            <span className="px-3 py-1 rounded-xl bg-blue-500 text-white absolute top-3 right-3 z-50 text-sm font-semibold">25 May</span>
+                            <span className="px-3 py-1 rounded-xl bg-blue-500 text-white absolute top-3 right-3 z-20 text-sm font-semibold">25 May</span>
                             <div className="absolute bottom-0 left-0 bg-primary text-white px-4 py-2 font-semibold rounded-tr-lg">Upcoming</div>
                         </div>
                         <div className="p-6">
@@ -53,7 +53,7 @@ const EventsSection = () => {
                     <div className="bg-white rounded-lg overflow-hidden shadow-md">
                         <div className="relative overflow-hidden">
                             <img src={eventImg_2} alt="Event" className="w-full h-64 object-cover object-center hover:scale-110 transition-all duration-1000" />
-                            <span className="px-3 py-1 rounded-xl bg-blue-500 text-white absolute top-3 right-3 z-50 text-sm font-semibold">25 May</span>
+                            <span className="px-3 py-1 rounded-xl bg-blue-500 text-white absolute top-3 right-3 z-20 text-sm font-semibold">25 May</span>
                             <div className="absolute bottom-0 left-0 bg-primary text-white px-4 py-2 font-semibold rounded-tr-lg">Upcoming</div>
                         </div>
                         <div className="p-6">

@@ -24,21 +24,21 @@ const MealsCategoryTab = () => {
     const filteredMeals = activeTab === 'all' ? melasData : melasData.filter(meal => meal.category === activeTab);
 
     return (
-        <div className="bg-slate-100 pb-24">
+        <div className="bg-slate-100 pb-24 pt-14">
 
             {/*//*== Tab Button Start ==*/}
-            <div className=" py-3 md:w-[450px] mx-auto ">
-                <div className="flex justify-between md:justify-between px-4 md:px-8 py-2 rounded-full border my-8 bg-primary text-white">
-                    <button className={` font-semibold ${activeTab === 'all' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('all')}>
+            <div className=" rounded-md py-1 md:w-[700px] mx-auto bg-white">
+                <div className="md:w-[450px] mx-auto  flex justify-between md:justify-between px-4 md:px-8 py-2 rounded-full border my-8 bg-primary text-white">
+                    <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'all' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('all')}>
                         All Meals
                     </button>
-                    <button className={` font-semibold ${activeTab === 'breakfast' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('breakfast')}>
+                    <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'breakfast' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('breakfast')}>
                         Breakfast
                     </button>
-                    <button className={` font-semibold ${activeTab === 'lunch' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('lunch')}>
+                    <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'lunch' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('lunch')}>
                         Lunch
                     </button>
-                    <button className={`px-3 font-semibold ${activeTab === 'dinner' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('dinner')}>
+                    <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'dinner' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('dinner')}>
                         Dinner
                     </button>
                 </div>

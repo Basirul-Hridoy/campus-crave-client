@@ -2,7 +2,7 @@ import MealsCategoryTab from "../../../components/Meals/MealsCategoryTab";
 
 const MialsCategory = () => {
     return (
-        <div className="my-14">
+        <div>
             <MealsCategoryTab />
         </div>
     );

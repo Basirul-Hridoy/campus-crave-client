@@ -1,34 +1,40 @@
 import BannerMealBox from '../../components/BannerMealBox';
-import bannerImg from "../../../public/images/home-top-1-1.jpg"
+import bannerImg from "../../../public/images/1.jpg"
 
 const Banner = () => {
     return (
-        <>
-            <div style={{ backgroundImage: `url(${bannerImg})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className='md:h-[800px] h-[400px] bg-cover  flex  items-center justify-center relative'>
+        <div style={{ backgroundImage: `url(${bannerImg})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }} >
+            <div className='md:min-h-screen h-[400px] bg-cover bg-center flex  md:items-center items-end mb-24 justify-center relative bg-primary bg-opacity-40'>
+
                 {/*//* ===== Banner section ======  */}
-                <div className='space-y-6'>
-                    <h1 className='md:text-5xl text-2xl text-center font-bold text-white flex flex-col gap-4'>
+                <div className='md:space-y-10 space-y-5'>
+                    <h1 className='md:text-6xl text-2xl text-center font-bold text-white flex flex-col md:gap-4 gap-2'>
+                        <p className=' text-white text-center md:text-2xl text-xl font-semibold'>
+                            <span className='text-secondary'>Campus Crave</span> the Best opportunity!
+                        </p>
                         <span>ORGANIC FAST FOOD MADE</span>
-                        <span> EASY AND HEALTHY</span>
+                        <span className='text-secondary'> EASY AND HEALTHY</span>
                     </h1>
                     <div className='border border-gray-500 p-1 flex justify-between gap-1 lg:w-8/12 mx-auto'>
                         <input className="flex-1 border border-[#1B8EF8] px-4 py-3 text-[#1B8EF8] duration-300 focus:outline-none placeholder:text-gray-600" type="text" placeholder='Search' />
                         <button className='px-6 py-3 bg-secondary text-white'>Subscribe</button>
                     </div>
                 </div>
+
                 <div className='hidden md:flex flex-col md:flex-row gap-8 md:absolute bottom-10'>
-                    <BannerMealBox heading={"Breakfast Meal"} description={"Today's your breakfast meal is dal vat"} />
-                    <BannerMealBox heading={"Lunch Meal"} description={"Today's your breakfast meal is dim vat"} />
-                    <BannerMealBox heading={"Dinner Meal"} description={"Today's your breakfast meal is mas vat"} />
+                    <BannerMealBox heading={"Breakfast"} description={"Today's your breakfast meal is dal vat"} />
+                    <BannerMealBox heading={"Lunch"} description={"Today's your breakfast meal is dim vat"} />
+                    <BannerMealBox heading={"Dinner"} description={"Today's your breakfast meal is mas vat"} />
                 </div>
 
             </div>
-            <div className='md:hidden flex flex-col md:flex-row gap-4 my-8 px-2 bg-slate-200'>
-                <BannerMealBox heading={"Breakfast Meal"} description={"Today's your breakfast meal is dal vat"} />
-                <BannerMealBox heading={"Lunch Meal"} description={"Today's your breakfast meal is dim vat"} />
-                <BannerMealBox heading={"Dinner Meal"} description={"Today's your breakfast meal is mas vat"} />
+
+            <div className='md:hidden flex flex-col md:flex-row gap-4 px-2 bg-slate-200'>
+                <BannerMealBox heading={"Breakfast"} description={"Today's your breakfast meal is dal vat"} />
+                <BannerMealBox heading={"Lunch"} description={"Today's your breakfast meal is dim vat"} />
+                <BannerMealBox heading={"Dinner"} description={"Today's your breakfast meal is mas vat"} />
             </div>
-        </>
+        </div>
     );
 };
 

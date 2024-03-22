@@ -4,14 +4,15 @@ import Footer from './Shared/Footer';
 import { StateContext } from './provider/GlobalStatemanagment';
 import { useContext } from 'react';
 function App() {
-  const { setNavUserModal } = useContext(StateContext);
+  const { setNavUserModal, toggleNavbarMenu, setToggleNavbarMenu } = useContext(StateContext);
   const handleNavUeerModal = () => {
-    setNavUserModal(false)
+    setNavUserModal(false);
+    setToggleNavbarMenu(false)
   }
   return (
     <div >
       <Navbar />
-      <div onClick={handleNavUeerModal}>
+      <div onClick={handleNavUeerModal} className=''>
         <Outlet />
       </div>
       <Footer />

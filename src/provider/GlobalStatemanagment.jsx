@@ -5,10 +5,12 @@ export const StateContext = createContext();
 const GlobalStatemanagment = ({ children }) => {
     const [navUserModal, setNavUserModal] = useState(false);
     const [showLoginModalState, setShowLoginModalState] = useState(false);
+    const [toggleNavbarMenu, setToggleNavbarMenu] = useState(false);
 
     const stateInfo = {
         navUserModal, setNavUserModal,
-        showLoginModalState, setShowLoginModalState
+        showLoginModalState, setShowLoginModalState,
+        toggleNavbarMenu, setToggleNavbarMenu,
     }
     return (
         <StateContext.Provider value={stateInfo}>

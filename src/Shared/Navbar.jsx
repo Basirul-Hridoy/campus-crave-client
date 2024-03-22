@@ -1,25 +1,43 @@
-import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AiOutlineLogin } from "react-icons/ai";
 import { IoMdNotifications } from "react-icons/io";
 import { StateContext } from '../provider/GlobalStatemanagment';
 import LoginModal from '../components/LoginModal';
+import { HiMenu } from "react-icons/hi";
+import { RiCloseCircleLine } from "react-icons/ri";
 
 const Navbar = () => {
     const user = !true;
-    const { navUserModal, setNavUserModal, setShowLoginModalState } = useContext(StateContext);
+    const { navUserModal, setNavUserModal, setShowLoginModalState, toggleNavbarMenu, setToggleNavbarMenu } = useContext(StateContext);
+    const [isNavbarVisible, setIsNavbarVisible] = useState(false);
+    const [toggleMenu, setToggleMenu] = useState(false);
+
+    const location = useLocation();
+    const isHome = location.pathname.includes("/");
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const visible = window.scrollY > 100;
+            setIsNavbarVisible(visible);
+        }
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
+
 
     return (
         <>
-            <nav className=" bg-primary py-5 px-3 md:px-0 text-white">
-                <div className='wrapper flex items-center justify-between'>
+            <nav className={` py-5 px-3 md:px-0  text-white fixed z-50 w-full ${isNavbarVisible ? "bg-primary duration-500 " : "bg-transparent duration-500"}`}>
+                <div className='wrapper flex items-center justify-between '>
+
                     {/*//* ============= Desktop ===========*/}
 
                     {/*//* ==== Logo field ====*/}
-                    <div className="cursor-pointer  transition-all duration-300 hover:scale-105">
+                    <Link to="/" className="cursor-pointer  transition-all duration-300 hover:scale-105">
                         {/* <h2><img src="../public/images/navbar-logo-removebg (2).png" className='w-40' alt="" /></h2> */}
                         <h2 className='md:text-4xl text-3xl text-orange-400 font-bold flex items-center gap-1 md:gap-2'><img src="../public/images/main-logo.png" className='md:w-12 w-10' alt="" /> Campus <span className='text-red-500'>Crave</span></h2>
-                    </div>
+                    </Link>
 
                     {/*//* ==== MenuBar ====*/}
                     <ul className="hidden items-center justify-between gap-10 md:flex uppercase font-semibold font-sans">
@@ -47,31 +65,43 @@ const Navbar = () => {
 
                     </ul>
 
+                    {/*//* ============= Mobile version ===========*/}
+                    <div className='md:hidden '>
+                        {!toggleNavbarMenu ? <HiMenu onClick={() => setToggleNavbarMenu(pre => !pre)} className='text-4xl' /> :
+                            <RiCloseCircleLine onClick={() => setToggleNavbarMenu(pre => !pre)} className='text-4xl' />}
 
-                    {/*//* ============= Mobile ===========*/}
-                    {/* <div ref={dropDownMenuRef} onClick={() => setDropDownState(!dropDownState)} className="relative flex transition-transform md:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="cursor-pointer" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /> </svg>
-                {dropDownState && (
-                    <ul className=" z-10  gap-2  bg-[#393E46]  absolute right-0 top-11 flex w-[200px] flex-col  rounded-lg   text-base ">
-                        <li className="cursor-pointer  px-6 py-2 text-white rounded-t-lg hover:bg-sky-600 ">
+                        <div>
+                            <ul className={`absolute left-0 top-0 p-8 w-5/6 duration-1000 min-h-screen bg-primary text-white ${toggleNavbarMenu ? "-translate-x-0" : "-translate-x-96"}`}>
+                                <ul onClick={() => setToggleNavbarMenu(false)} className=" items-center justify-between gap-10 md:flex uppercase font-semibold font-sans">
+                                    <NavLink to={"/"}>
+                                        <li className="group flex  cursor-pointer flex-col">
+                                            Home<span className="navItmeBorder"></span>
+                                        </li>
+                                    </NavLink>
+                                    <NavLink to={"/meals"}>
+                                        <li className="group flex  cursor-pointer flex-col">
+                                            Meals<span className="navItmeBorder"></span>
+                                        </li>
+                                    </NavLink>
+                                    <NavLink to={"/upcomming-meals"}>
+                                        <li className="group flex  cursor-pointer flex-col">
+                                            Upcoming Meals
+                                            <span className="navItmeBorder"></span>
+                                        </li>
+                                    </NavLink>
+                                    {!user && <button onClick={() => setShowLoginModalState(true)}>
+                                        <li className=" flex gap-2 cursor-pointer border border-gray-600 rounded-2xl py-2 px-3 hover:bg-secondary hover:duration-300">
+                                            Join US <span className='text-2xl'><AiOutlineLogin /></span>
+                                        </li>
+                                    </button>}
 
-                            Home
-                        </li>
-                        <li className="cursor-pointer  px-6 py-2 text-white hover:bg-sky-600 ">
-                            Services
-                        </li>
-                        <li className="cursor-pointer  px-6 py-2 text-white hover:bg-sky-600 ">
-                            About
-                        </li>
-                        <li className="cursor-pointer  px-6 py-2 text-white hover:bg-sky-600 ">
-                            Contact
-                        </li>
-                    </ul>
-                )}
-            </div> */}
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
 
 
-
+                    {/*//* === User image feild ====*/}
                     {user && <div className='flex gap-3 items-center'>
                         {/* <img src="../public/main-logo.png" className='w-12 h-12 rounded-full' alt="" /> */}
                         <div>
@@ -96,6 +126,8 @@ const Navbar = () => {
                     </div>}
                 </div>
             </nav>
+
+            {/*//* === Login Modal ====*/}
             <LoginModal />
         </>
     );
