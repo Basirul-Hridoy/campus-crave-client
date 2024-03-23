@@ -1,34 +1,34 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AiOutlineLogin } from "react-icons/ai";
 import { IoMdNotifications } from "react-icons/io";
 import { StateContext } from '../provider/GlobalStatemanagment';
 import LoginModal from '../components/LoginModal';
 import { HiMenu } from "react-icons/hi";
 import { RiCloseCircleLine } from "react-icons/ri";
+import SignUpModal from '../components/SignUpModal';
 
 const Navbar = () => {
     const user = !true;
     const { navUserModal, setNavUserModal, setShowLoginModalState, toggleNavbarMenu, setToggleNavbarMenu } = useContext(StateContext);
     const [isNavbarVisible, setIsNavbarVisible] = useState(false);
-    const [toggleMenu, setToggleMenu] = useState(false);
 
-    const location = useLocation();
-    const isHome = location.pathname.includes("/");
+
 
     useEffect(() => {
         const handleScroll = () => {
             const visible = window.scrollY > 100;
             setIsNavbarVisible(visible);
         }
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll)
-    }, [])
+    }, []);
 
 
     return (
         <>
-            <nav className={` py-5 px-3 md:px-0  text-white fixed z-50 w-full ${isNavbarVisible ? "bg-primary duration-500 " : "bg-transparent duration-500"}`}>
+            <nav className={` py-5 px-3 md:px-0 text-white fixed z-50 w-full ${isNavbarVisible ? "bg-primary duration-500 " : "bg-transparent duration-500"}`}>
                 <div className='wrapper flex items-center justify-between '>
 
                     {/*//* ============= Desktop ===========*/}
@@ -129,6 +129,7 @@ const Navbar = () => {
 
             {/*//* === Login Modal ====*/}
             <LoginModal />
+            <SignUpModal />
         </>
     );
 };

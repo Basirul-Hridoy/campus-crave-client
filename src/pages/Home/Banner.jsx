@@ -1,5 +1,5 @@
 import BannerMealBox from '../../components/BannerMealBox';
-import bannerImg from "../../../public/images/1.jpg"
+import bannerImg from "../../../public/images/2.jpg"
 
 const Banner = () => {
     return (
