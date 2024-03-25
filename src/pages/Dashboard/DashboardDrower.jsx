@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import useAuth from '../../Hook/useAuth';
 
 const DashboardDrower = ({ userMenuItems, activeItem, handleItemClick }) => {
@@ -11,8 +10,8 @@ const DashboardDrower = ({ userMenuItems, activeItem, handleItemClick }) => {
             <div className="w-72 bg-[#182237] min-h-screen">
 
                 <div className='flex items-center px-4 text-accent font-semibold text-xl gap-2 mt-12'>
-                    <img className='w-12 h-12 rounded-full' src={user.photoURL} alt="" />
-                    <h4>{user.displayName}</h4>
+                    <img className='w-12 h-12 rounded-full' src={user?.photoURL} alt="" />
+                    <h4>{user?.displayName}</h4>
                 </div>
                 {/*//* ==== Admin sidebar menu ====*/}
                 <ul className="flex flex-col md:gap-2 text-accent p-4">
@@ -34,7 +33,7 @@ const DashboardDrower = ({ userMenuItems, activeItem, handleItemClick }) => {
             </div>
 
             {/*//* Dashboard outlate*/}
-            <div className="flex-1 bg-[#151C2C] text-accent">
+            <div className="flex-1 bg-[#151C2C] text-accent md:p-10 p-2">
                 <Outlet />
             </div>
         </div>
