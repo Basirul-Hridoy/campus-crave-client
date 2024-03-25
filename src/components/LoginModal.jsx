@@ -1,24 +1,36 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { StateContext } from '../provider/GlobalStatemanagment';
 import { IoMdCloseCircle } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
 import { useForm } from 'react-hook-form';
 import useAuth from '../Hook/useAuth';
+import Loading from './Loading';
 
 const LoginModal = () => {
     const { showLoginModalState, setShowLoginModalState, setShowSignUpModalState } = useContext(StateContext);
-    const { register, handleSubmit, watch, formState: { errors }, } = useForm();
+    const { register, handleSubmit, reset, watch, formState: { errors }, } = useForm();
+    const [loginLoading, setLoginLoading] = useState(false);
+    const [firebaseError, setFirebaseError] = useState(false);
 
     const { signIn } = useAuth();
 
     const onSubmit = (data) => {
-        console.log(data)
-
+        setLoginLoading(true)
         signIn(data.email, data.password)
             .then(res => {
                 console.log(res);
+                // reset()
+                setLoginLoading(false)
+                setShowLoginModalState(false)
+            }).catch(error => {
+                setFirebaseError(error.message)
+                setLoginLoading(false)
             })
+    }
+
+    if (loginLoading) {
+        return <Loading />
     }
 
     return (
@@ -58,8 +70,9 @@ const LoginModal = () => {
                                     className="peer w-full rounded-lg border border-gray-300 px-4 py-3 text-[#1B8EF8] focus:outline-none"
                                     type="text"
                                     placeholder=""
-                                    {...register("email")}
+                                    {...register("email", { required: true })}
                                 />
+                                {errors?.email && <span className='text-red-400 text-sm'>Email is required</span>}
 
                                 {/*//*== Email label ==*/}
                                 <label
@@ -75,8 +88,9 @@ const LoginModal = () => {
                                     className="peer w-full rounded-lg border border-gray-300 px-4 py-3 text-[#1B8EF8] focus:outline-none"
                                     type="password"
                                     placeholder=""
-                                    {...register("password")}
+                                    {...register("password", { required: true })}
                                 />
+                                {errors?.password && <span className='text-red-400 text-sm'>Password is required</span>}
 
                                 {/*//*== Password label ==*/}
                                 <label
@@ -89,6 +103,7 @@ const LoginModal = () => {
 
                             {/*//*== Login button ==*/}
                             <button type='submit' className='w-full py-3 rounded-lg bg-secondary text-white'>Login</button>
+                            <p className='text-red-400 text-sm'>{firebaseError}</p>
                         </div>
 
                         {/*//*== Additional options ==*/}

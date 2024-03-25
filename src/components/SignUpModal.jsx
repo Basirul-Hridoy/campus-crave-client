@@ -5,33 +5,93 @@ import { Link } from 'react-router-dom';
 import { StateContext } from '../provider/GlobalStatemanagment';
 import { useForm } from 'react-hook-form';
 import useAuth from '../Hook/useAuth';
-import { axiosPublic } from '../Hook/useAxiosPublic';
-import { updateProfile } from 'firebase/auth';
 import toast from 'react-hot-toast';
+import { axiosPublic } from '../Hook/useAxiosPublic';
+import Loading from './Loading';
+import ImageUploadLoading from './ImageUploadLoading';
+
+const imageUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imagebb_api_key}`
 
 const SignUpModal = () => {
     const { showSignUpModalState, setShowSignUpModalState, setShowLoginModalState } = useContext(StateContext);
-    const { register, handleSubmit, reset, formState: { errors }, } = useForm();
-    const { createUser, updateUserInfo } = useAuth();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { createUser, updateUserInfo, loading } = useAuth();
     const [showName, setShowName] = useState({});
+    const [image, setImage] = useState("");
+    const [imageUploadLoading, setImageUploadLoading] = useState(false);
+    const [firebaseError, setFirebaseError] = useState(false);
+    const [signUpLoading, SetsignUpLoading] = useState(false);
+
+    //* Image upload function
+    const uploadImage = (file) => {
+        console.log("inside up");
+        setImageUploadLoading(true);
+        const formData = new FormData();
+        formData.append('image', file);
+        console.log(formData);
+
+        axiosPublic.post(imageUrl, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(result => {
+                console.log("Upload result:", result);
+                setImage(result.data?.data?.display_url);
+                setImageUploadLoading(false)
+            })
+            .catch(error => {
+                console.error('Error uploading image:', error);
+            });
+    }
 
     const onSubmit = (data) => {
-
+        SetsignUpLoading(true);
         //* user creation
         createUser(data.email, data.password)
             .then(result => {
                 console.log(result);
 
                 //* update profile name and image url
-                updateUserInfo(data.name)
+                updateUserInfo(data.name, image)
                     .then(() => {
-                        toast.success("User cretion successfull");
-                        setShowSignUpModalState(false);
-                        reset()
+                        //* User info for posting to the databse
+                        const userInfo = {
+                            name: data.name,
+                            image: image,
+                            email: data.email,
+                            badge: "bronze",
+                            role: "user"
+                        }
+
+                        //* post method using axios base url
+                        axiosPublic.post("/users", userInfo)
+                            .then(res => {
+                                SetsignUpLoading(false);
+                                toast.success("User cretion successfull");
+                                setShowSignUpModalState(false);
+                                reset()
+                            }).catch(error => {
+                                SetsignUpLoading(false);
+                                console.log(error)
+                            })
+
+
                     }).catch(error => {
-                        console.log(error);
-                    })
+                        SetsignUpLoading(false);
+                        console.log(error.message);
+                    });
+
+            }).catch(error => {
+                SetsignUpLoading(false);
+                setFirebaseError(error.code);
+                console.log(error.message);
             })
+    }
+
+
+    if (signUpLoading) {
+        return <Loading />
     }
 
     return (
@@ -56,9 +116,14 @@ const SignUpModal = () => {
                             {/*//*== Close Icon ==*/}
                             <IoMdCloseCircle />
                         </div>
-                        <div className='text-center mx-auto w-full flex justify-center mb-5'>
-                            <img src="../../public/images/download.jpeg" className='w-24 h-24 rounded-full object-cover ring-2 ring-secondary' alt="" />
-                        </div>
+
+                        {/*//* == user image div ====*/}
+                        {image && <div className='text-center mx-auto w-full flex justify-center mb-5'>
+                            <img src={image} className='w-24 h-24 rounded-full object-cover ring-2 ring-secondary' alt="" />
+                        </div>}
+
+                        {/*//* image upload loading*/}
+                        {imageUploadLoading && <ImageUploadLoading />}
 
                         {/*//*== Login heading ==*/}
                         <h1 className="backdrop-blur-sm text-4xl pb-8 font-semibold text-primary">Sign Up</h1>
@@ -74,8 +139,9 @@ const SignUpModal = () => {
                                     className="peer w-full rounded-lg border border-gray-300 px-4 py-3 text-[#1B8EF8] focus:outline-none"
                                     type="text"
                                     placeholder=""
-                                    {...register("name")}
+                                    {...register("name", { required: true })}
                                 />
+                                {errors?.name && <span className='text-red-400 text-sm'>User name is required</span>}
 
                                 {/*//*== Email label ==*/}
                                 <label
@@ -90,8 +156,10 @@ const SignUpModal = () => {
                                     className="peer w-full rounded-lg border border-gray-300 px-4 py-3 text-[#1B8EF8] focus:outline-none"
                                     type="email"
                                     placeholder=""
-                                    {...register("email")}
+                                    {...register("email", { required: true })}
                                 />
+                                <p className='text-red-400 text-sm'>{firebaseError}</p>
+                                {errors?.email && <span className='text-red-400 text-sm'>Email is required</span>}
 
                                 {/*//*== Email label ==*/}
                                 <label
@@ -107,8 +175,9 @@ const SignUpModal = () => {
                                     className="peer w-full rounded-lg border border-gray-300 px-4 py-3 text-[#1B8EF8] focus:outline-none"
                                     type="password"
                                     placeholder=""
-                                    {...register("password")}
+                                    {...register("password", { required: true })}
                                 />
+                                {errors?.password && <span className='text-red-400 text-sm'>Password is required</span>}
 
                                 {/*//*== Password label ==*/}
                                 <label
@@ -117,22 +186,30 @@ const SignUpModal = () => {
                             </div>
 
                             {/*//* == Image upload field ==*/}
-                            <div>
-                                <label htmlFor="type2-2" className="flex w-full">
+                            <div className='max-w-full'>
+                                <label htmlFor="type2-2" className="flex w-full cursor-pointer">
                                     <div className="w-fit whitespace-nowrap bg-secondary px-3 py-2 text-white">Choose File</div>
-                                    <div className="flex w-full max-w-[380px] items-center border-b-[2px] border-secondary px-2 font-medium text-gray-400">{showName.name ? showName.name : 'No File Chosen'}</div>
+                                    <div className="flex w-full max-w-full overflow-hidden items-center border-b-[2px] border-secondary px-2 font-medium text-gray-400">{showName.name ? showName.name : 'No File Chosen'}</div>
                                 </label>
                                 <input
                                     onChange={(e) => {
                                         if (e.target.files && e.target.files[0]) {
                                             const imageFile = e.target.files[0];
+                                            uploadImage(imageFile); // Correctly call the uploadImage function
                                             setShowName(imageFile);
+                                            console.log("input iamge");
                                         }
-                                    }} className="hidden" type="file" name="" id="type2-2" />
+                                        console.log("outside input image uplaod");
+                                    }}
+                                    className="hidden"
+                                    type="file"
+                                    name=""
+                                    id="type2-2"
+                                />
                             </div>
 
                             {/*//*== Login button ==*/}
-                            <button type='submit' className='w-full py-3 rounded-lg bg-secondary text-white'>SignUp</button>
+                            <button disabled={!image} type='submit' className={`w-full py-3 rounded-lg bg-secondary text-white disabled:bg-slate-400`}>SignUp</button>
                         </div>
 
                         {/*//*== Additional options ==*/}

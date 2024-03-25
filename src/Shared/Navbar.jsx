@@ -7,9 +7,10 @@ import LoginModal from '../components/LoginModal';
 import { HiMenu } from "react-icons/hi";
 import { RiCloseCircleLine } from "react-icons/ri";
 import SignUpModal from '../components/SignUpModal';
+import useAuth from '../Hook/useAuth';
 
 const Navbar = () => {
-    const user = !true;
+    const { user, signout } = useAuth();
     const { navUserModal, setNavUserModal, setShowLoginModalState, toggleNavbarMenu, setToggleNavbarMenu } = useContext(StateContext);
     const [isNavbarVisible, setIsNavbarVisible] = useState(false);
 
@@ -109,16 +110,16 @@ const Navbar = () => {
                         </div>
                         <div className="relative mx-auto w-fit text-black">
                             <button onClick={() => setNavUserModal((prev) => !prev)}>
-                                <img width={40} height={40} src='../../public/images/main-logo.png' />
+                                <img className='w-12 h-12 rounded-full' src={user?.photoURL} />
                             </button>
                             <ul className={`${navUserModal ? 'visible duration-300' : 'invisible'} absolute right-0 top-[67px] z-50 rounded-sm bg-slate-200 shadow-md`}>
-                                <p className={`rounded-sm w-60 px-4 py-2 font-semibold`}>
-                                    Hridoy Ahme (user)
+                                <p className={`rounded-sm w-60 px-4 py-2 font-semibold cursor-none`}>
+                                    {user?.displayName}
                                 </p>
-                                <li className={`rounded-sm w-60 px-4 py-2 hover:bg-primary hover:text-white hover:duration-300`}>
+                                <li className={`cursor-pointer rounded-sm w-60 px-4 py-2 hover:bg-primary hover:text-white hover:duration-300`}>
                                     Dashboard
                                 </li>
-                                <li className={`rounded-sm w-60 px-4 py-2 hover:bg-primary hover:text-white hover:duration-300 `}>
+                                <li onClick={signout} className={`cursor-pointer rounded-sm w-60 px-4 py-2 hover:bg-primary hover:text-white hover:duration-300 `}>
                                     Logout
                                 </li>
                             </ul>
