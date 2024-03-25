@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import useAuth from '../../Hook/useAuth';
 
-const DashboardDrower = ({ userMenuItems, activeItem, handleItemClick }) => {
+const DashboardDrower = ({ admiDashboardMenu, activeItem, handleItemClick }) => {
 
     const { user } = useAuth();
     return (
@@ -13,9 +13,10 @@ const DashboardDrower = ({ userMenuItems, activeItem, handleItemClick }) => {
                     <img className='w-12 h-12 rounded-full' src={user?.photoURL} alt="" />
                     <h4>{user?.displayName}</h4>
                 </div>
+
                 {/*//* ==== Admin sidebar menu ====*/}
                 <ul className="flex flex-col md:gap-2 text-accent p-4">
-                    {userMenuItems.map((category, categoryIndex) => (
+                    {admiDashboardMenu.map((category, categoryIndex) => (
                         <div className='mb-2' key={categoryIndex}>
                             <li className="text-accent font-bold text-xl">{category.title}</li>
                             {category.list.map((item, index) => (
@@ -30,6 +31,7 @@ const DashboardDrower = ({ userMenuItems, activeItem, handleItemClick }) => {
                         </div>
                     ))}
                 </ul>
+
             </div>
 
             {/*//* Dashboard outlate*/}
