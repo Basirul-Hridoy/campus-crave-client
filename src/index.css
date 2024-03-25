@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 .active{
-    @apply text-secondary  
+    @apply text-secondary 
  }
+ /* For inactive links */
+.inactive {
+   @apply text-accent; /* Example: change to your desired inactive color */
+}
 
  .navItmeBorder{
     @apply mt-[2px] h-[3px] w-[0px] rounded-full bg-secondary transition-all duration-300 group-hover:w-full

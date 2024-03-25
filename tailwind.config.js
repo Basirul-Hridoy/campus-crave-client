@@ -10,6 +10,7 @@ export default {
         // custom colors here
         'primary': '#173253',
         'secondary': '#F97316',
+        'accent': '#ADB0B8',
       },
     },
   },

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineLogin } from "react-icons/ai";
 import { IoMdNotifications } from "react-icons/io";
 import { StateContext } from '../provider/GlobalStatemanagment';
@@ -13,7 +13,10 @@ const Navbar = () => {
     const { user, signout } = useAuth();
     const { navUserModal, setNavUserModal, setShowLoginModalState, toggleNavbarMenu, setToggleNavbarMenu } = useContext(StateContext);
     const [isNavbarVisible, setIsNavbarVisible] = useState(false);
+    const navigate = useNavigate();
 
+    const location = useLocation();
+    const isDashboard = location.pathname.startsWith('/dashboard');
 
 
     useEffect(() => {
@@ -30,7 +33,7 @@ const Navbar = () => {
     return (
         <>
             <nav className={` py-5 px-3 md:px-0 text-white fixed z-50 w-full ${isNavbarVisible ? "bg-primary duration-500 " : "bg-transparent duration-500"}`}>
-                <div className='wrapper flex items-center justify-between '>
+                <div className='wrapper flex items-center justify-between'>
 
                     {/*//* ============= Desktop ===========*/}
 
@@ -116,7 +119,7 @@ const Navbar = () => {
                                 <p className={`rounded-sm w-60 px-4 py-2 font-semibold cursor-none`}>
                                     {user?.displayName}
                                 </p>
-                                <li className={`cursor-pointer rounded-sm w-60 px-4 py-2 hover:bg-primary hover:text-white hover:duration-300`}>
+                                <li onClick={() => navigate("/dashboard")} className={`cursor-pointer rounded-sm px-4 py-2 hover:bg-primary hover:text-white hover:duration-300`}>
                                     Dashboard
                                 </li>
                                 <li onClick={signout} className={`cursor-pointer rounded-sm w-60 px-4 py-2 hover:bg-primary hover:text-white hover:duration-300 `}>
