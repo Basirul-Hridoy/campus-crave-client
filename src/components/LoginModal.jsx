@@ -3,16 +3,30 @@ import { StateContext } from '../provider/GlobalStatemanagment';
 import { IoMdCloseCircle } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
+import { useForm } from 'react-hook-form';
+import useAuth from '../Hook/useAuth';
 
 const LoginModal = () => {
     const { showLoginModalState, setShowLoginModalState, setShowSignUpModalState } = useContext(StateContext);
+    const { register, handleSubmit, watch, formState: { errors }, } = useForm();
+
+    const { signIn } = useAuth();
+
+    const onSubmit = (data) => {
+        console.log(data)
+
+        signIn(data.email, data.password)
+            .then(res => {
+                console.log(res);
+            })
+    }
+
     return (
         // //*== Div containing the login modal
         <div className="w-72 mx-auto flex items-center justify-center">
 
             {/*//*== Div handling the backdrop and closing modal ==*/}
             <div
-                onClick={() => setShowLoginModalState(false)}
                 className={`fixed flex justify-center items-center z-[100] ${showLoginModalState ? 'visible opacity-1' : 'invisible opacity-0'} inset-0 w-full h-full bg-black/20 duration-100`}>
 
                 {/*//*== Div containing the login form ==*/}
@@ -20,7 +34,7 @@ const LoginModal = () => {
                     className={`absolute w-full lg:w-[500px] bg-slate-100 drop-shadow-2xl rounded-lg ${showLoginModalState ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'} `}>
 
                     {/*//*== The login form ==*/}
-                    <form className="p-6 ">
+                    <form onSubmit={handleSubmit(onSubmit)} className="md:p-6 p-3">
 
                         {/*//*== Close button ==*/}
                         <div
@@ -43,7 +57,9 @@ const LoginModal = () => {
                                 <input
                                     className="peer w-full rounded-lg border border-gray-300 px-4 py-3 text-[#1B8EF8] focus:outline-none"
                                     type="text"
-                                    placeholder="" />
+                                    placeholder=""
+                                    {...register("email")}
+                                />
 
                                 {/*//*== Email label ==*/}
                                 <label
@@ -57,8 +73,10 @@ const LoginModal = () => {
                                 {/*//*== Password input field ==*/}
                                 <input
                                     className="peer w-full rounded-lg border border-gray-300 px-4 py-3 text-[#1B8EF8] focus:outline-none"
-                                    type="text"
-                                    placeholder="" />
+                                    type="password"
+                                    placeholder=""
+                                    {...register("password")}
+                                />
 
                                 {/*//*== Password label ==*/}
                                 <label
@@ -70,7 +88,7 @@ const LoginModal = () => {
                             </div>
 
                             {/*//*== Login button ==*/}
-                            <button className='w-full py-3 rounded-lg bg-secondary text-white'>Login</button>
+                            <button type='submit' className='w-full py-3 rounded-lg bg-secondary text-white'>Login</button>
                         </div>
 
                         {/*//*== Additional options ==*/}
