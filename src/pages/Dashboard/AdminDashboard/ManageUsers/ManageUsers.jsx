@@ -4,15 +4,20 @@ import useAuth from "../../../../Hook/useAuth";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { MdSearch } from "react-icons/md";
+import { useEffect, useState } from "react";
 
 const ManageUsers = () => {
-
+    const [searchTerm, setSearchTerm] = useState('')
     //* Load all users from database
     const { data: usersData = [], refetch } = useQuery({
-        queryKey: ["users"],
-        queryFn: () => axiosSecure.get("/users")
+        queryKey: ["users", searchTerm],
+        queryFn: () => axiosSecure.get(`/users?search=${searchTerm}`)
             .then(res => res.data)
     });
+
+    useEffect(() => {
+        refetch();
+    }, [searchTerm, refetch])
 
     //* update user role via admin
     const handleUpdateUserRole = (id) => {
@@ -46,7 +51,13 @@ const ManageUsers = () => {
                 <h4 className='text-2xl font-semibold'>All Users: {usersData.length}</h4>
                 <div className='flex items-center gap-2 p-3 bg-[#2E374A] rounded-md'>
                     <MdSearch className="text-xl" />
-                    <input type="text" className=" rounded-md outline-none bg-[#2E374A]" placeholder='Search...' />
+                    <input
+                        type="text"
+                        className=" rounded-md outline-none bg-[#2E374A]"
+                        placeholder='Search...'
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </div>
             </div>
 
