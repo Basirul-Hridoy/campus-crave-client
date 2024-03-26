@@ -26,7 +26,7 @@ const DashboardDrower = ({ admiDashboardMenu, activeItem, handleItemClick }) => 
                                         handleItemClick(item.path); // Update the active item state
                                         navigate(item.path); // Navigate to the corresponding content
                                     }}
-                                    className={`flex items-center gap-3 rounded-md my-1 font-semibold duration-100 p-3 hover:bg-[#2E374A] ${activeItem === item.path ? ' bg-[#2E374A] p-3' : ''}`}
+                                    className={`cursor-pointer flex items-center gap-3 rounded-md my-1 font-semibold duration-100 p-3 hover:bg-[#2E374A] ${activeItem === item.path ? ' bg-[#2E374A] p-3' : ''}`}
                                 >
                                     {item.icon}{item.title}
                                 </li>

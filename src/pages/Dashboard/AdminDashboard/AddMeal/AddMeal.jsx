@@ -39,9 +39,9 @@ const AddMeal = () => {
             category: data.category,
             ingredients: data.ingredients,
             price: data.price,
-            rating: 0,
-            like: 0,
-            review: 0,
+            ratings: 0,
+            likes: 0,
+            reviews: 0,
             time: new Date(),
             distributorName: user?.displayName,
             distributorEmail: user?.email,
@@ -54,9 +54,9 @@ const AddMeal = () => {
             .then(res => {
                 if (res.data.success) {
                     toast.success(res.data.message);
-                    setImage("")
-                    setShowName("")
-                    reset();
+                    // setImage("")
+                    // setShowName("")
+                    // reset();
                 } else {
                     toast.error(res.data.message)
                 }

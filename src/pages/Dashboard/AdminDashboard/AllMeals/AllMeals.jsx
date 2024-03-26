@@ -1,51 +1,36 @@
 import { useQuery } from "@tanstack/react-query";
+import { MdSearch } from "react-icons/md";
 import { axiosSecure } from "../../../../Hook/useAxiosSecure";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import { MdSearch } from "react-icons/md";
-import { useEffect, useState } from "react";
 import Loading from "../../../../components/Loading";
 
-const ManageUsers = () => {
-    const [searchTerm, setSearchTerm] = useState('')
+const AllMeals = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [renderMealLOading, setRenderMealLoading] = useState(true);
 
-    //* Load all users from database
-    const { data: usersData = [], refetch, isLoading } = useQuery({
-        queryKey: ["users", searchTerm],
-        queryFn: () => axiosSecure.get(`/users?search=${searchTerm}`)
-            .then(res => res.data)
-    });
+    // //* Load meals data from database
+    const { data: mealsData = [], refetch, isLoading } = useQuery({
+        queryKey: ["meals", searchTerm],
+        queryFn: () => axiosSecure.get(`/meals?search=${searchTerm}`)
+            .then(res => {
+                setRenderMealLoading(false)
+                return res.data
+            })
 
+    })
+
+    console.log(mealsData);
+    //* Refetch to to search meals 
     useEffect(() => {
         refetch();
     }, [searchTerm, refetch]);
 
-    //* If I needed to use custom table design to use all the table design page then uncomment these code to use 
+    //* Delete a single meal from the collection
+    const handleDelete = (id) => {
 
-    // Serialize usersData with numerical indices
-    // const serializedUsersData = usersData.map((user, index) => {
-    //     return { ...user, id: index + 1 };
-    // });
-
-    // const columns = [
-    //     { text: '#', dataKey: 'id' },
-    //     { text: 'User name', dataKey: 'name' },
-    //     { text: 'User Email', dataKey: 'email' },
-    //     {
-    //         text: 'Make Admin', dataKey: 'role', render: (user) => (
-    //             <button
-    //                 onClick={() => handleUpdateUserRole(user._id)}
-    //                 className={`px-2 py-1 rounded-lg  ${user.role === "user" ? "bg-secondary text-white" : "bg-green-400 text-primary"}  `}
-    //             >
-    //                 {user.role}
-    //             </button>
-    //         )
-    //     },
-    //     { text: 'User Status', dataKey: 'badge' }
-    // ];
-
-    //* update user role via admin
-    const handleUpdateUserRole = (id) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -53,29 +38,27 @@ const ManageUsers = () => {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Make Admin!"
+            confirmButtonText: "Yes, Delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`/users/${id}`)
+                axiosSecure.delete(`/meals/${id}`)
                     .then(res => {
                         console.log(res);
                         refetch();
-                        toast.success("Admin successfully added")
+                        toast.success("Meal deleted successfully ")
                     })
             }
         });
-
     }
 
-    if (isLoading) {
+    if (renderMealLOading) {
         return <Loading />
     }
     return (
-
         <>
             {/*//* === users search field ===*/}
             <div className='bg-[#182237] p-5 flex justify-between rounded-md items-center'>
-                <h4 className='text-2xl font-semibold'>All Users: {usersData.length}</h4>
+                <h4 className='text-2xl font-semibold'>All Meals: {mealsData.length}</h4>
                 <div className='flex items-center gap-2 p-3 bg-[#2E374A] rounded-md'>
                     <MdSearch className="text-xl" />
                     <input
@@ -97,42 +80,61 @@ const ManageUsers = () => {
                                 #
                             </th>
                             <th scope="col" className="px-6 py-5">
-                                User name
+                                Meal Title
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                User Email
+                                Likes
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Make Admin
+                                Reviews
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                User Status
+                                Distributor name
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Distributor Email
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Update
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Delete
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                View
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            usersData.map((user, index) => (
-                                <tr key={user._id} className="border-b border-b-gray-700 dark:bg-gray-800 hover:bg-[#2E374A] dark:hover:bg-gray-600">
+                            mealsData?.map((meal, index) => (
+                                <tr key={meal._id} className="border-b border-b-gray-700 dark:bg-gray-800 hover:bg-[#2E374A] dark:hover:bg-gray-600">
                                     <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap ">
                                         {index + 1}
                                     </th>
                                     <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap ">
-                                        {user?.name}
+                                        {meal?.title}
                                     </th>
                                     <td className="px-6 py-4">
-                                        {user?.email}
+                                        {meal?.likes}
                                     </td>
                                     <td className="px-6 py-4">
-                                        {user.role === "user" ? <button onClick={() => handleUpdateUserRole(user._id)}
-                                            className={`px-2 py-1 rounded-lg  ${user.role === "user" ? "bg-secondary text-white" : "bg-green-400 text-primary"}  `}
-                                        >{user?.role}</button> :
-                                            <p>{user?.role}</p>
-                                        }
-
+                                        {meal?.reviews}
                                     </td>
                                     <td className="px-6 py-4">
-                                        {user?.badge}
+                                        {meal?.distributorName}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {meal?.distributorEmail}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <button className="px-3 py-1 rounded-md bg-blue-400 text-white">Edit</button>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <button onClick={() => handleDelete(meal._id)} className="px-3 py-1 rounded-md bg-red-400 text-white">Delete</button>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <Link>Meal Details</Link>
                                     </td>
                                 </tr>
                             ))
@@ -141,12 +143,8 @@ const ManageUsers = () => {
                     </tbody>
                 </table>
             </div>
-
-            {/*//* ==== If I need to use custom table design ===*/}
-            {/* <TableComponent columns={columns} data={serializedUsersData} /> */}
-
         </>
     );
 };
 
-export default ManageUsers;
+export default AllMeals;
