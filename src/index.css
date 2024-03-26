@@ -21,3 +21,7 @@
  .primaryBtn{
    @apply rounded-lg text-sm border border-secondary px-8 py-3 duration-200 hover:bg-secondary hover:text-white
  }
+
+ .input-style{
+   @apply rounded-md border-none outline-none w-full p-3 bg-dashboard-secondary
+ }

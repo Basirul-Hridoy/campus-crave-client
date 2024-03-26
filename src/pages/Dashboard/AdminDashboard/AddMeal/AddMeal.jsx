@@ -1,12 +1,67 @@
 import { useState } from "react";
-import CustomInput from "../../../../components/CustomInput";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../../Hook/useAuth";
+import toast from "react-hot-toast";
+import { axiosSecure } from "../../../../Hook/useAxiosSecure";
+import ImageUploadLoading from "../../../../components/ImageUploadLoading";
 
+
+const imageUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imagebb_api_key}`
 const AddMeal = () => {
     const [showName, setShowName] = useState({});
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const [image, setImage] = useState('');
+    const [imageUploadLoading, setImageUploadLoading] = useState(false);
+    const { user } = useAuth();
 
-    const onSubmit = (data) => console.log(data)
+    //* == post meal image 
+    const handleImageUpload = (file) => {
+        setImageUploadLoading(true)
+        const formData = new FormData();
+        formData.append("image", file);
+
+        axiosSecure.post(imageUrl, formData, {
+            headers: { "content-type": "multipart/formData" }
+        })
+            .then(result => {
+                setImage(result.data?.data?.url);
+                setImageUploadLoading(false);
+                console.log(result);
+            })
+    }
+
+    const onSubmit = (data) => {
+        console.log(data);
+
+        //* Post data to post meals collection
+        const mealsInfo = {
+            title: data.title,
+            category: data.category,
+            ingredients: data.ingredients,
+            price: data.price,
+            rating: 0,
+            like: 0,
+            review: 0,
+            time: new Date(),
+            distributorName: user?.displayName,
+            distributorEmail: user?.email,
+            image: image,
+
+        }
+
+        //* post methods
+        axiosSecure.post("/meals", mealsInfo)
+            .then(res => {
+                if (res.data.success) {
+                    toast.success(res.data.message);
+                    setImage("")
+                    setShowName("")
+                    reset();
+                } else {
+                    toast.error(res.data.message)
+                }
+            })
+    }
     return (
         <div>
             {/*//* Add meal title */}
@@ -23,59 +78,69 @@ const AddMeal = () => {
                 {/*//* Add meal title and category field */}
                 <div className="flex flex-col md:flex-row gap-3">
                     <p className="w-full">
-                        <CustomInput
+                        <input
                             placeholder={"Title"}
                             type={"text"}
-                        // {...register("title", { required: true })}
+                            className="input-style"
+                            {...register("title", { required: true })}
                         />
+                        {errors?.title && <span className='text-red-400 text-sm'>Meal title is required</span>}
                     </p>
                     <select
                         id="input-field"
                         className="border-none outline-none bg-dashboard-secondary p-3 rounded-md w-full"
-                    // {...register("category", { required: true })}
+                        {...register("category", { required: true })}
                     >
-                        <option value="" disabled defaultValue="Category">Select Category</option>
+                        <option value="Select Category" disabled defaultValue={"Select Category"}>Select Category</option>
                         <option value="Breakfast">Breakfast</option>
                         <option value="Lunch">Lunch</option>
                         <option value="Dinner">Dinner</option>
                     </select>
+                    {errors?.category && <span className='text-red-400 text-sm'>Category is required</span>}
                 </div>
 
                 {/*//*  meal ingradient and Price field */}
                 <div className="flex flex-col md:flex-row gap-3">
                     <p className="w-full">
-                        <CustomInput
+                        <input
                             placeholder={"Ingredients"}
                             type={"text"}
-                        // {...register("ingredients", { required: true })}
+                            className="input-style"
+                            {...register("ingredients", { required: true })}
                         />
+                        {errors?.ingredients && <span className='text-red-400 text-sm'>Meal ingradients is required</span>}
                     </p>
                     <p className="w-full">
-                        <CustomInput
+                        <input
                             placeholder={"Price"}
                             type={"number"}
-                        // {...register("price", { required: true })}
+                            step="any"
+                            className="input-style"
+                            {...register("price", { required: true })}
                         />
+                        {errors?.price && <span className='text-red-400 text-sm'>Price is required</span>}
                     </p>
                 </div>
 
                 {/*//*  meal distributor name and Email */}
-                <div className="flex flex-col md:flex-row gap-3">
+                {/* <div className="flex flex-col md:flex-row gap-3">
                     <p className="w-full">
-                        <CustomInput
+                        <input
                             placeholder={"Distributor Name"}
                             type={"text"}
-                        // {...register("distributorName", { required: true })}
+                            className="input-style"
+                            {...register("distributorName", { required: true })}
                         />
                     </p>
                     <p className="w-full">
-                        <CustomInput
+                        <input
                             placeholder={"Distributor Email"}
                             type={"email"}
-                        // {...register("distributorEmail", { required: true })}
+                            className="input-style"
+                            {...register("distributorEmail", { required: true })}
                         />
                     </p>
-                </div>
+                </div> */}
 
                 {/*//*  meal Image input */}
                 <div className="w-full">
@@ -88,17 +153,30 @@ const AddMeal = () => {
                             onChange={(e) => {
                                 if (e.target.files && e.target.files[0]) {
                                     const imageFile = e.target.files[0];
-                                    setShowName(imageFile);
+                                    handleImageUpload(imageFile)
+                                    setShowName(imageFile)
                                 }
-                            }} className="hidden" type="file" name="" id="type2-2" />
+                            }}
+                            className="hidden"
+                            type="file"
+                            id="type2-2"
+                        />
+                    </div>
+
+                    {/*//* ===  Image loading and showing in the UI ===*/}
+                    <div className="flex items-center">
+                        {image && (
+                            <div><img src={image} className="w-20 rounded-sm mt-1" alt="" /></div>
+                        )}
+                        {
+                            imageUploadLoading && <div className="flex-1 mx-auto"><ImageUploadLoading /></div>
+                        }
                     </div>
                 </div>
 
                 {/*//* Meal description */}
                 <div className="w-full">
                     <textarea
-                        name=""
-                        id=""
                         rows="4"
                         placeholder="Description"
                         className="w-full bg-dashboard-secondary p-3 outline-none resize-none"
@@ -108,8 +186,8 @@ const AddMeal = () => {
 
                 {/*//* Submit button field*/}
                 <div className="flex justify-between gap-3 ">
-                    <button type="submit" className="primaryBtn w-full">Ad meal</button>
-                    <button type="submit" className="primaryBtn w-full">Upcomming meal</button>
+                    <button type="submit" className="primaryBtn bg-blue-500 border-none hover:bg-blue-600 text-white w-full">Ad meal</button>
+                    <button type="submit" className="primaryBtn bg-blue-500 border-none hover:bg-blue-600 text-white w-full">Upcomming meal</button>
                 </div>
             </form>
         </div >

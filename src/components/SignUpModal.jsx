@@ -24,11 +24,9 @@ const SignUpModal = () => {
 
     //* Image upload function
     const uploadImage = (file) => {
-        console.log("inside up");
         setImageUploadLoading(true);
         const formData = new FormData();
         formData.append('image', file);
-        console.log(formData);
 
         axiosPublic.post(imageUrl, formData, {
             headers: {
