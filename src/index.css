@@ -17,3 +17,7 @@
  .wrapper{
     @apply max-w-[1400px] mx-auto
  }
+
+ .primaryBtn{
+   @apply rounded-lg text-sm border border-secondary px-8 py-3 duration-200 hover:bg-secondary hover:text-white
+ }
