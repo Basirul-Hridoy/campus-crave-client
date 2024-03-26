@@ -34,7 +34,7 @@ const AddMeal = () => {
                         className="border-none outline-none bg-dashboard-secondary p-3 rounded-md w-full"
                     // {...register("category", { required: true })}
                     >
-                        <option value="" disabled defaultValue="Croatia">Select Category</option>
+                        <option value="" disabled defaultValue="Category">Select Category</option>
                         <option value="Breakfast">Breakfast</option>
                         <option value="Lunch">Lunch</option>
                         <option value="Dinner">Dinner</option>

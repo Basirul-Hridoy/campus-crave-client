@@ -6,6 +6,7 @@ import MealDetailsPage from "../components/Meals/MealDetailsPage";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers/ManageUsers";
 import AddMeal from "../pages/Dashboard/AdminDashboard/AddMeal/AddMeal";
+import AdminProfile from "../pages/Dashboard/AdminDashboard/AdminProfile/AdminProfile";
 
 export const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: <Dashboard />,
         children: [
+            {
+                index: true,
+                element: <AdminProfile />
+            },
             {
                 path: "manage-users",
                 element: <ManageUsers />

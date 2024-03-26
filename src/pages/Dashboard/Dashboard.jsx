@@ -3,43 +3,24 @@ import { CgProfile } from "react-icons/cg";
 import { FaFortAwesomeAlt, FaHome, FaStar, FaUsers } from "react-icons/fa";
 import { GiHotMeal, GiMeal } from "react-icons/gi";
 import { MdNoMeals } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const Dashboard = () => {
 
-    const [activeItem, setActiveItem] = useState(null);
-
-
+    const [activeItem, setActiveItem] = useState('/dashboard/admin-profile');
     const location = useLocation();
-
-    useEffect(() => {
-        // Define a function to determine the active item based on the current path
-        const determineActiveItem = () => {
-            // Example logic to determine the active item
-            // This should be adjusted based on your actual route paths
-            if (location.pathname.includes('/dashboard/manage-users')) {
-                return '/dashboard/manage-users';
-            } else if (location.pathname.includes('/dashboard/another-page')) {
-                return '/dashboard/another-page';
-            }
-        };
-
-        // Set the initial active item based on the current route
-        setActiveItem(determineActiveItem());
-    }, [location]);
 
     // Function to handle list item click
     const handleItemClick = (path) => {
         setActiveItem(path);
     };
 
-
-    const admiDashboardMenu = [
+    const admiDashboardMenu = useMemo(() => [
         {
             title: "Pages",
             list: [
-                { title: 'Admin Profile', path: '/dashboard/admin-profile', icon: <CgProfile /> },
+                { title: 'Admin Profile', path: '/dashboard', icon: <CgProfile /> },
                 { title: 'Manage Users', path: '/dashboard/manage-users', icon: <FaUsers /> },
                 { title: 'Add Meal', path: '/dashboard/add-meal', icon: <GiHotMeal /> },
                 { title: 'All Meals', path: '/dashboard/all-meals', icon: <MdNoMeals /> },
@@ -54,13 +35,24 @@ const Dashboard = () => {
                 { title: "Home", path: "/", icon: <FaHome /> }
             ]
         }
-    ];
+    ], []);
 
+    useEffect(() => {
+        const currentPath = location.pathname;
+        const activeItem = admiDashboardMenu.flatMap(category => category.list).find(item => item.path === currentPath);
+        if (activeItem) {
+            setActiveItem(activeItem.path);
+        }
+    }, [location, admiDashboardMenu]);
 
     return (
         <div>
             {/* <DashboardDrower adminMenu={adminMenu} userMenu={userMenu} /> */}
-            <DashboardDrower admiDashboardMenu={admiDashboardMenu} activeItem={activeItem} handleItemClick={handleItemClick} />
+            <DashboardDrower
+                admiDashboardMenu={admiDashboardMenu}
+                activeItem={activeItem}
+                handleItemClick={handleItemClick}
+            />
         </div>
     );
 };
