@@ -67,9 +67,6 @@ const ManageUsers = () => {
 
     }
 
-    if (isLoading) {
-        return <Loading />
-    }
     return (
 
         <>

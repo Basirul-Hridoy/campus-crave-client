@@ -8,6 +8,7 @@ import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers/ManageUse
 import AddMeal from "../pages/Dashboard/AdminDashboard/AddMeal/AddMeal";
 import AdminProfile from "../pages/Dashboard/AdminDashboard/AdminProfile/AdminProfile";
 import AllMeals from "../pages/Dashboard/AdminDashboard/AllMeals/AllMeals";
+import UserProfile from "../pages/Dashboard/UserDashboard/UserProfile";
 
 export const router = createBrowserRouter([
     {
@@ -33,7 +34,7 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
         children: [
             {
-                index: true,
+                path: "admin-profile",
                 element: <AdminProfile />
             },
             {
@@ -48,6 +49,11 @@ export const router = createBrowserRouter([
                 path: "all-meals",
                 element: <AllMeals />
             },
+            //* user route 
+            {
+                path: "user-profile",
+                element: <UserProfile />
+            }
         ]
     }
 ]);

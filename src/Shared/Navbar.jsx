@@ -8,9 +8,11 @@ import { HiMenu } from "react-icons/hi";
 import { RiCloseCircleLine } from "react-icons/ri";
 import SignUpModal from '../components/SignUpModal';
 import useAuth from '../Hook/useAuth';
+import useAdmin from '../Hook/useAdmin';
 
 const Navbar = () => {
     const { user, signout } = useAuth();
+    const [isAdmin, adminLoading] = useAdmin();
     const { navUserModal, setNavUserModal, setShowLoginModalState, toggleNavbarMenu, setToggleNavbarMenu } = useContext(StateContext);
     const [isNavbarVisible, setIsNavbarVisible] = useState(false);
     const navigate = useNavigate();
@@ -119,7 +121,7 @@ const Navbar = () => {
                                 <p className={`rounded-sm w-60 px-4 py-2 font-semibold cursor-none`}>
                                     {user?.displayName}
                                 </p>
-                                <li onClick={() => navigate("/dashboard")} className={`cursor-pointer rounded-sm px-4 py-2 hover:bg-primary hover:text-white hover:duration-300`}>
+                                <li onClick={() => navigate(`${isAdmin ? "/dashboard/admin-profile" : "/dashboard/user-profile"}`)} className={`cursor-pointer rounded-sm px-4 py-2 hover:bg-primary hover:text-white hover:duration-300`}>
                                     Dashboard
                                 </li>
                                 <li onClick={signout} className={`cursor-pointer rounded-sm w-60 px-4 py-2 hover:bg-primary hover:text-white hover:duration-300 `}>

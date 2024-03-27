@@ -12,7 +12,7 @@ const AllMeals = () => {
     const [renderMealLOading, setRenderMealLoading] = useState(true);
 
     // //* Load meals data from database
-    const { data: mealsData = [], refetch, isLoading } = useQuery({
+    const { data: mealsData = [], refetch } = useQuery({
         queryKey: ["meals", searchTerm],
         queryFn: () => axiosSecure.get(`/meals?search=${searchTerm}`)
             .then(res => {

@@ -30,9 +30,9 @@ const AddMeal = () => {
             })
     }
 
+
     const onSubmit = (data) => {
         console.log(data);
-
         //* Post data to post meals collection
         const mealsInfo = {
             title: data.title,
@@ -62,6 +62,9 @@ const AddMeal = () => {
                 }
             })
     }
+
+
+
     return (
         <div>
             {/*//* Add meal title */}
@@ -122,26 +125,6 @@ const AddMeal = () => {
                     </p>
                 </div>
 
-                {/*//*  meal distributor name and Email */}
-                {/* <div className="flex flex-col md:flex-row gap-3">
-                    <p className="w-full">
-                        <input
-                            placeholder={"Distributor Name"}
-                            type={"text"}
-                            className="input-style"
-                            {...register("distributorName", { required: true })}
-                        />
-                    </p>
-                    <p className="w-full">
-                        <input
-                            placeholder={"Distributor Email"}
-                            type={"email"}
-                            className="input-style"
-                            {...register("distributorEmail", { required: true })}
-                        />
-                    </p>
-                </div> */}
-
                 {/*//*  meal Image input */}
                 <div className="w-full">
                     <div className='max-w-full'>
@@ -182,6 +165,7 @@ const AddMeal = () => {
                         className="w-full bg-dashboard-secondary p-3 outline-none resize-none"
                         {...register("description", { required: true })}
                     ></textarea>
+                    {errors?.description && <span className='text-red-400 text-sm'>Description is required</span>}
                 </div>
 
                 {/*//* Submit button field*/}

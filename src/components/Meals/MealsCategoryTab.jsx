@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaStar } from "react-icons/fa"
 import { useNavigate } from "react-router-dom";
+import { axiosPublic } from "../../Hook/useAxiosPublic";
+import useGetMealsData from "../../Hook/useGetMealsData";
 const MealsCategoryTab = () => {
 
     //* State to manage active tab
@@ -11,17 +13,10 @@ const MealsCategoryTab = () => {
 
 
     //* Fetch meals data using react-query
-    const { data: melasData = [] } = useQuery({
-        queryKey: ["meals"],
-        queryFn: async () => {
-            const res = await fetch("meals.json");
-            return res.json()
-        }
-
-    })
+    const [mealsData, refetch, isLoading] = useGetMealsData();
 
     //* Filter meals based on active tab
-    const filteredMeals = activeTab === 'all' ? melasData : melasData.filter(meal => meal.category === activeTab);
+    const filteredMeals = activeTab === 'all' ? mealsData : mealsData.filter(meal => meal.category === activeTab);
 
     return (
         <div className="bg-slate-100 pb-24 pt-14">
@@ -32,13 +27,13 @@ const MealsCategoryTab = () => {
                     <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'all' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('all')}>
                         All Meals
                     </button>
-                    <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'breakfast' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('breakfast')}>
+                    <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'Breakfast' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('Breakfast')}>
                         Breakfast
                     </button>
-                    <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'lunch' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('lunch')}>
+                    <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'Lunch' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('Lunch')}>
                         Lunch
                     </button>
-                    <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'dinner' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('dinner')}>
+                    <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'Dinner' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('Dinner')}>
                         Dinner
                     </button>
                 </div>
@@ -47,7 +42,7 @@ const MealsCategoryTab = () => {
 
             {/*//* ===== Display meals =======*/}
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 wrapper">
-                {filteredMeals.map(meal => (
+                {filteredMeals?.slice(0, 8).map(meal => (
                     <div key={meal.id} className="px-4 py-8 shadow-lg max-w-[350px] font-sans rounded-xl mx-auto bg-white">
                         <div className="flex justify-center w-full h-48 md:h-[280px] relative">
                             <div className="flex justify-between items-center left-4 right-4 top-4 absolute">
@@ -56,7 +51,7 @@ const MealsCategoryTab = () => {
                                 </div>
                                 <button className="bg-[#0095FF] hover:bg-[#0095FF]/90 duration-200 text-white font-medium px-3 py-1 rounded-xl">৳ {meal.price}</button>
                             </div>
-                            <img className="rounded-lg bg-black/40 w-full h-full" src="https://source.unsplash.com/300x300/?macbook" alt="card navigate ui" />
+                            <img className="rounded-lg bg-black/40 w-full h-full object-cover" src={meal.image} alt="card navigate ui" />
                         </div>
                         <div className="space-y-3 mt-3">
                             <div className=" w-[85%] font-semibold ">
@@ -64,7 +59,7 @@ const MealsCategoryTab = () => {
                             </div>
                             <div className=" text-sm md:text-base flex justify-between items-center">
                                 <button
-                                    onClick={() => navigate(`/meal-details/${meal.id}`, { state: melasData })}
+                                    onClick={() => navigate(`/meal-details/${meal.id}`, { state: mealsData })}
                                     className="px-4 py-2 rounded-lg bg-[#49B2FF] hover:bg-sky-600 duration-300 hover:scale-105 text-white font-semibold font-sans">Details</button>
 
                                 <p className=" px-3 py-2 rounded-lg font-semibold border border-gray-200 flex items-center">
