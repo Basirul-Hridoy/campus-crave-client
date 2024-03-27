@@ -3,12 +3,12 @@ import eventImg_2 from "../../../../public/images/events/download.jpeg"
 import eventImg_3 from "../../../../public/images/events/20170527_COMM_GradSunday01.jpg"
 const EventsSection = () => {
     return (
-        <section className="py-12 bg-gray-100">
+        <section className="md:py-12 py-2 bg-gray-100">
             <div className="wrapper mx-auto px-4">
                 {/* Section Title and Short Description */}
                 <div className="my-12 text-center space-y-4">
                     <h2 className="text-3xl md:text-5xl font-bold text-secondary mb-2">Events and Activities</h2>
-                    <p className="text-primary text-xl md:w-1/2 mx-auto">Stay updated with our upcoming events and exciting activities organized for the university community.</p>
+                    <p className="text-primary md:text-xl md:w-1/2 mx-auto">Stay updated with our upcoming events and exciting activities organized for the university community.</p>
                 </div>
 
                 {/* Event Grid */}

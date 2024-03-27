@@ -59,13 +59,13 @@ const AllMeals = () => {
     return (
         <>
             {/*//* === users search field ===*/}
-            <div className='bg-[#182237] p-5 flex justify-between rounded-md items-center'>
-                <h4 className='text-2xl font-semibold'>All Meals: {mealsData.length}</h4>
-                <div className='flex items-center gap-2 p-3 bg-[#2E374A] rounded-md'>
-                    <MdSearch className="text-xl" />
+            <div className='bg-[#182237] md:p-5 p-3 flex justify-between rounded-md items-center'>
+                <h4 className='md:text-2xl text-xl font-semibold whitespace-nowrap'> Meals: {mealsData.length}</h4>
+                <div className='flex items-center gap-2 md:p-3 p-2 bg-[#2E374A] rounded-md w-3/6 md:w-[250px]'>
+                    <MdSearch className="md:text-xl text-base" />
                     <input
                         type="text"
-                        className=" rounded-md outline-none bg-[#2E374A]"
+                        className=" rounded-md outline-none bg-[#2E374A] w-1/2"
                         placeholder='Search...'
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -74,9 +74,9 @@ const AllMeals = () => {
             </div>
 
             {/*//* ===== Users table =======*/}
-            <div className="md:mt-8  mx-auto relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 whitespace-nowrap">
+            <div style={{ maxHeight: "600px", overflowY: "scroll" }} className="md:mt-8  mx-auto relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                    <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-5">
                                 #

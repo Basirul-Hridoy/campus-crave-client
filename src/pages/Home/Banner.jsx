@@ -16,9 +16,10 @@ const Banner = () => {
                         <span className='text-secondary'> EASY AND HEALTHY</span>
                     </h1>
 
-                    <div className='border border-gray-500 p-1 flex justify-between gap-1 md:w-8/12 mx-auto'>
-                        <input className="flex-1 border border-[#1B8EF8] px-4 py-3 text-[#1B8EF8] duration-300 focus:outline-none placeholder:text-gray-600" type="text" placeholder='Search' />
-                        <button className='px-6 py-3 bg-secondary text-white'>Subscribe</button>
+                    {/*//* === Search input ====*/}
+                    <div className='border border-gray-500 p-1 flex justify-between gap-1 md:w-8/12 w-ful mx-auto'>
+                        <input className="flex-1 border border-[#1B8EF8] md:px-4 px-2 py-3 text-[#1B8EF8] duration-300 focus:outline-none placeholder:text-gray-600" type="text" placeholder='Search' />
+                        <button className='md:px-6 px-2 py-3 bg-secondary text-white text-sm'>Subscribe</button>
                     </div>
                 </div>
 

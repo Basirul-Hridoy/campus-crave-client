@@ -153,7 +153,7 @@ const Navbar = () => {
                             }}>
                                 <img className='md:w-12 md:h-12 w-10 h-10 rounded-full' src={user?.photoURL} />
                             </button>
-                            <ul className={`${navUserModal ? 'scale-y-100' : ' scale-y-0 '} origin-top absolute right-0 top-[72px] z-50 rounded-sm bg-slate-200 shadow-md duration-500`}>
+                            <ul className={`${navUserModal ? 'scale-y-100' : ' scale-y-0 '} origin-top absolute -right-2 md:right-0 md:top-[72px] top-[66px] z-50 rounded-sm bg-slate-200 shadow-md duration-500`}>
                                 <p className={`rounded-sm w-60 px-4 py-2 font-semibold cursor-none`}>
                                     {user?.displayName}
                                 </p>

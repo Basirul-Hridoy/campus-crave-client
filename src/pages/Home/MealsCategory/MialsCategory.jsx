@@ -17,7 +17,7 @@ const MialsCategory = () => {
         <div className="bg-slate-100 pb-24 pt-14">
             {/*//*==Category Tab Button Start ==*/}
             <div className=" rounded-md py-1 md:w-[700px] mx-auto bg-white">
-                <div className="md:w-[450px] mx-auto  flex justify-between md:justify-between px-4 md:px-8 py-2 rounded-full border my-8 bg-primary text-white">
+                <div className="md:w-[450px] md:mx-auto  flex justify-between md:justify-between px-4 mx-3 md:px-8 py-2 rounded-full border md:my-8 my-5 bg-primary text-white text-sm md:text-base">
                     <button className={`px-3 py-1 hover:bg-secondary rounded-full font-semibold duration-300 ${activeTab === 'all' ? 'px-3 py-1 bg-secondary rounded-full whitespace-nowrap' : ''}`} onClick={() => setActiveTab('all')}>
                         All Meals
                     </button>

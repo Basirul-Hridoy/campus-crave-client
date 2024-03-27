@@ -69,14 +69,14 @@ const AddMeal = () => {
         <div>
             {/*//* Add meal title */}
             <div className="max-w-[800px] mx-auto mb-12 md:mt-12">
-                <h2 className="text-4xl text-center font-semibold py-5 rounded-md bg-dashboard-primary">Ad meal page</h2>
+                <h2 className="md:text-4xl text-3xl text-center font-semibold md:py-5 p-3 rounded-md bg-dashboard-primary">Ad meal page</h2>
             </div>
 
             {/*//* ===== Add meal form ==== */}
-            <form onSubmit={handleSubmit(onSubmit)} className="md:max-w-[800px] mx-auto md:p-10 bg-dashboard-primary rounded-md space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="md:max-w-[800px] mx-auto md:p-10 p-2 bg-dashboard-primary rounded-md space-y-5">
 
                 {/*//* form title */}
-                <h4 className="text-center font-semibold text-3xl">Add Item</h4>
+                <h4 className="text-center font-semibold md:text-3xl text-2xl">Add Item</h4>
 
                 {/*//* Add meal title and category field */}
                 <div className="flex flex-col md:flex-row gap-3">
@@ -169,7 +169,7 @@ const AddMeal = () => {
                 </div>
 
                 {/*//* Submit button field*/}
-                <div className="flex justify-between gap-3 ">
+                <div className="flex justify-between gap-3 whitespace-nowrap md:text-base text-xs">
                     <button type="submit" className="primaryBtn bg-blue-500 border-none hover:bg-blue-600 text-white w-full">Ad meal</button>
                     <button type="submit" className="primaryBtn bg-blue-500 border-none hover:bg-blue-600 text-white w-full">Upcomming meal</button>
                 </div>
