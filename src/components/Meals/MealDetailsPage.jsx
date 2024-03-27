@@ -2,11 +2,12 @@ import { useLocation } from "react-router-dom";
 
 const MealDetailsPage = () => {
     const location = useLocation();
-    const mealData = location.state
+    const meal = location.state;
+    console.log(meal);
 
     return (
-        <div>
-            {mealData.length}
+        <div className="text-5xl min-h-screen bg-primary text-center text-white pt-40">
+            {meal.title}
         </div>
     );
 };

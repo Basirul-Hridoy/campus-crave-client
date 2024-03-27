@@ -4,7 +4,7 @@ import bannerImg from "../../../public/images/2.jpg"
 const Banner = () => {
     return (
         <div style={{ backgroundImage: `url(${bannerImg})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }} >
-            <div className='md:min-h-screen h-[400px] bg-cover bg-center flex  md:items-center items-end mb-24 justify-center relative bg-primary bg-opacity-40'>
+            <div className='md:min-h-screen h-[420px] bg-cover bg-center flex  md:items-center items-end pb-14 md:pb-0 md:mb-24 justify-center relative bg-primary bg-opacity-40'>
 
                 {/*//* ===== Banner section ======  */}
                 <div className='md:space-y-10 space-y-5'>
@@ -15,7 +15,8 @@ const Banner = () => {
                         <span>ORGANIC FAST FOOD MADE</span>
                         <span className='text-secondary'> EASY AND HEALTHY</span>
                     </h1>
-                    <div className='border border-gray-500 p-1 flex justify-between gap-1 lg:w-8/12 mx-auto'>
+
+                    <div className='border border-gray-500 p-1 flex justify-between gap-1 md:w-8/12 mx-auto'>
                         <input className="flex-1 border border-[#1B8EF8] px-4 py-3 text-[#1B8EF8] duration-300 focus:outline-none placeholder:text-gray-600" type="text" placeholder='Search' />
                         <button className='px-6 py-3 bg-secondary text-white'>Subscribe</button>
                     </div>
@@ -29,7 +30,7 @@ const Banner = () => {
 
             </div>
 
-            <div className='md:hidden flex flex-col md:flex-row gap-4 px-2 bg-slate-200'>
+            <div className='hidden flex flex-col md:flex-row gap-4 px-2 bg-slate-200 '>
                 <BannerMealBox heading={"Breakfast"} description={"Today's your breakfast meal is dal vat"} />
                 <BannerMealBox heading={"Lunch"} description={"Today's your breakfast meal is dim vat"} />
                 <BannerMealBox heading={"Dinner"} description={"Today's your breakfast meal is mas vat"} />

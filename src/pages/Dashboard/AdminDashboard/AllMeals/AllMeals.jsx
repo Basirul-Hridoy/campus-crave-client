@@ -36,6 +36,8 @@ const AllMeals = () => {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
+            background: "#182237",
+            color: "#F9ECE4",
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, Delete it!"

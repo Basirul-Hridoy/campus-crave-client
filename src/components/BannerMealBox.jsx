@@ -2,7 +2,7 @@ import { MdDinnerDining, MdFreeBreakfast, MdLunchDining } from "react-icons/md";
 const BannerMealBox = ({ heading, description }) => {
     return (
         <div>
-            <div className='flex items-center gap-8 p-8 bg-primary rounded-md hover:-translate-y-3 duration-700'>
+            <div className='flex items-center gap-8 p-8 bg-primary rounded-md md:hover:-translate-y-3 hover:translate-y-3 md:mt-0 duration-700'>
                 <div className='text-6xl text-secondary'>
                     {heading === "Breakfast" && <MdFreeBreakfast />}
                     {heading === "Lunch" && <MdLunchDining />}

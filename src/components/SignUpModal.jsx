@@ -15,7 +15,7 @@ const imageUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imag
 const SignUpModal = () => {
     const { showSignUpModalState, setShowSignUpModalState, setShowLoginModalState } = useContext(StateContext);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { createUser, updateUserInfo, loading } = useAuth();
+    const { createUser, updateUserInfo } = useAuth();
     const [showName, setShowName] = useState({});
     const [image, setImage] = useState("");
     const [imageUploadLoading, setImageUploadLoading] = useState(false);
@@ -34,7 +34,6 @@ const SignUpModal = () => {
             }
         })
             .then(result => {
-                console.log("Upload result:", result);
                 setImage(result.data?.data?.display_url);
                 setImageUploadLoading(false)
             })
@@ -116,18 +115,18 @@ const SignUpModal = () => {
                         </div>
 
                         {/*//* == user image div ====*/}
-                        {image && <div className='text-center mx-auto w-full flex justify-center mb-5'>
-                            <img src={image} className='w-24 h-24 rounded-full object-cover ring-2 ring-secondary' alt="" />
+                        {image && <div className='text-center mx-auto w-full flex justify-center md:mb-5 '>
+                            <img src={image} className='md:w-24 md:h-24 w-16 h-16 rounded-full object-cover ring-2 ring-secondary' alt="" />
                         </div>}
 
                         {/*//* image upload loading*/}
                         {imageUploadLoading && <ImageUploadLoading />}
 
                         {/*//*== Login heading ==*/}
-                        <h1 className="backdrop-blur-sm text-4xl pb-8 font-semibold text-primary">Sign Up</h1>
+                        <h1 className="backdrop-blur-sm md:text-4xl text-2xl md:mb-8 mb-4  font-semibold text-primary">Sign Up</h1>
 
                         {/*//*== Input fields ==*/}
-                        <div className='space-y-7'>
+                        <div className='md:space-y-7 space-y-3'>
 
                             {/*//*== Name input ==*/}
                             <div className="relative w-full rounded-lg">
@@ -187,7 +186,7 @@ const SignUpModal = () => {
                             <div className='max-w-full'>
                                 <label htmlFor="type2-2" className="flex w-full cursor-pointer">
                                     <div className="w-fit whitespace-nowrap bg-secondary px-3 py-2 text-white">Choose File</div>
-                                    <div className="flex w-full max-w-full overflow-hidden items-center border-b-[2px] border-secondary px-2 font-medium text-gray-400">{showName.name ? showName.name : 'No File Chosen'}</div>
+                                    <div className="flex w-full max-w-full overflow-hidden items-center border-b-[2px] border-secondary px-2 font-medium text-gray-400 text-xs">{showName.name ? showName.name : 'No File Chosen'}</div>
                                 </label>
                                 <input
                                     onChange={(e) => {
@@ -214,7 +213,7 @@ const SignUpModal = () => {
                         <div className='my-3'>
 
                             {/*//*== Not a member? Signup link ==*/}
-                            <p className='flex justify-center items-center gap-1'>Already have an account? <Link
+                            <p className='flex justify-center items-center gap-1 md:text-base text-sm'>Already have an account? <Link
                                 onClick={() => {
                                     setShowLoginModalState(true);
                                     setShowSignUpModalState(false)
@@ -222,7 +221,7 @@ const SignUpModal = () => {
                                 className='text-blue-400 font-semibold text-sm'>Login</Link></p>
 
                             {/*//*== Social media login options ==*/}
-                            <div className='flex justify-center gap-4 mt-4'>
+                            <div className='flex justify-center gap-4 md:mt-4 mt-2'>
                                 <span><FaGoogle className='p-2 rounded-full bg-red-400 w-10 h-10 text-white' /></span>
                                 <span><FaFacebookF className='p-2 rounded-full bg-blue-400 w-10 h-10 text-white' /></span>
                             </div>

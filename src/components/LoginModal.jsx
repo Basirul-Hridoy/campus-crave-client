@@ -20,7 +20,7 @@ const LoginModal = () => {
         signIn(data.email, data.password)
             .then(res => {
                 console.log(res);
-                // reset()
+                reset()
                 setLoginLoading(false)
                 setShowLoginModalState(false)
             }).catch(error => {

@@ -1,9 +1,9 @@
-import mealsBannerImage from "../../../public/images/page-title-4.jpg"
 import MealsCardDesign from "../../components/Meals/MealsCardDesign";
-import { GetAllMealsData } from "../../lib/database/getMeals";
+import mealsBannerImage from "../../../public/images/page-title-3.jpg"
+import { GetUpcommingMeals } from "../../lib/database/getMeals";
 
-const Meals = () => {
-    const [mealsData, refetch, isLoading] = GetAllMealsData();
+const UpcommingMeals = () => {
+    const [mealsData] = GetUpcommingMeals()
     return (
         <div >
             <div style={{ backgroundImage: `url(${mealsBannerImage})` }} className='md:h-[500px] h-[200px] bg-cover bg-center'>
@@ -19,7 +19,7 @@ const Meals = () => {
                 }
             </div>
         </div>
-    );
+    )
 };
 
-export default Meals;
+export default UpcommingMeals;
