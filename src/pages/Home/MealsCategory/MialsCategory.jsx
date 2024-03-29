@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MealsCardDesign from "../../../components/Meals/MealsCardDesign";
 import { GetAllMealsData } from "../../../lib/database/getMeals";
+import { Link } from "react-router-dom";
 
 const MialsCategory = () => {
     //* State to manage active tab
@@ -42,8 +43,10 @@ const MialsCategory = () => {
                     ))
                 }
             </div>
-
-        </div>
+            {mealsData.length > 0 && <div className="w-full justify-end flex wrapper md:mt-5 mt-3">
+                <Link to={"/meals"} className=" px-10 py-3 rounded-md bg-secondary text-white flex justify-end">See all meals</Link>
+            </div>}
+        </div >
     );
 };
 
